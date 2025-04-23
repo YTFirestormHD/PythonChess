@@ -134,6 +134,14 @@ class Board:
         self.board[to_row][to_col] = self.board[from_row][from_col]
         self.board[from_row][from_col] = None
 
+    def is_king_alive(self, color):
+        for row in range(8):
+            for col in range(8):
+                piece = self.board[row][col]
+                if piece and piece.color == color and piece.piece_type == "King":
+                    return True
+        return False
+
 # Game state
 class Game:
     def __init__(self):
@@ -205,6 +213,22 @@ def draw_board(screen_width, screen_height):
             if piece:
                 scaled_image = pygame.transform.scale(piece.image, (square_size, square_size))
                 screen.blit(scaled_image, (x_offset + col * square_size, y_offset + row * square_size))
+
+
+    if not game.board.is_king_alive("Black"):
+        # Draw gameover message
+        font = pygame.font.SysFont("arial", 48)
+        text = font.render(" White wins! ", True, BLACK, WHITE)
+        text_rect = text.get_rect(center=(screen_width // 2, screen_height // 2))
+        screen.blit(text, text_rect)
+    elif not game.board.is_king_alive("White"):
+        # Draw gameover message
+        font = pygame.font.SysFont("arial", 48)
+        text = font.render(" Black wins! ", True, WHITE, BLACK)
+        text_rect = text.get_rect(center=(screen_width // 2, screen_height // 2))
+        screen.blit(text, text_rect)
+
+
 
     # Draw selected piece border
     if game.selected_pos:
