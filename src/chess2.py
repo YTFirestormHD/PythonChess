@@ -20,19 +20,14 @@ SELECTED = (255, 255, 0)  # Yellow for selected piece border
 
 # Set up the display with resizable flag
 screen = pygame.display.set_mode((BOARD_SIZE, BOARD_SIZE), pygame.RESIZABLE)
-pygame.display.set_caption("Chess")
+pygame.display.set_caption("Schach")
 
 # Piece class
 class Piece:
     def __init__(self, color, piece_type):
         self.color = color
         self.piece_type = piece_type
-        try:
-            self.image = pygame.image.load(f"../assets/{piece_type}_{color}.png")
-        except pygame.error:
-            # Fallback: Colored rectangle if image fails
-            self.image = pygame.Surface((SQUARE_SIZE, SQUARE_SIZE))
-            self.image.fill((200, 200, 200) if color == "White" else (50, 50, 50))
+        self.image = pygame.image.load(f"../assets/{piece_type}_{color}.png")
 
     def __repr__(self):
         return f"{self.color} {self.piece_type}"
@@ -270,8 +265,5 @@ async def main():
         update_loop()
         await asyncio.sleep(1.0 / FPS)
 
-if platform.system() == "Emscripten":
-    asyncio.ensure_future(main())
-else:
-    if __name__ == "__main__":
-        asyncio.run(main())
+if __name__ == "__main__":
+    asyncio.run(main())
