@@ -1,6 +1,8 @@
 import asyncio
 import platform
+import time
 import pygame
+from fontTools.misc.plistlib import end_string
 
 # Initialize Pygame
 pygame.init()
@@ -10,7 +12,9 @@ SQUARE_SIZE = 60
 BOARD_SIZE = 8 * SQUARE_SIZE
 FPS = 60
 
-# Colors
+# Colors add blue and red
+RED = (255, 0, 0)
+BLUE = (0, 0, 255)
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 LIGHT_BROWN = (240, 217, 181)
@@ -142,6 +146,15 @@ class Board:
                     return True
         return False
 
+    def is_draw(self):
+        amount_left = 0
+        for row in range(8):
+            for col in range(8):
+                if self.board[row][col] is not None:
+                    amount_left +=1
+                    continue
+        return amount_left <= 2
+
 # Game state
 class Game:
     def __init__(self):
@@ -184,6 +197,7 @@ class Game:
 
 # Create game
 game = Game()
+end_game = False
 
 def draw_board(screen_width, screen_height):
     # Calculate board size and square size
@@ -221,14 +235,23 @@ def draw_board(screen_width, screen_height):
         text = font.render(" White wins! ", True, BLACK, WHITE)
         text_rect = text.get_rect(center=(screen_width // 2, screen_height // 2))
         screen.blit(text, text_rect)
+        end_game = True
+
     elif not game.board.is_king_alive("White"):
         # Draw gameover message
         font = pygame.font.SysFont("arial", 48)
         text = font.render(" Black wins! ", True, WHITE, BLACK)
         text_rect = text.get_rect(center=(screen_width // 2, screen_height // 2))
         screen.blit(text, text_rect)
+        end_game = True
 
 
+    if game.board.is_draw():
+        font = pygame.font.SysFont("arial", 48)
+        text = font.render(" Draw! ", True, RED, BLUE)
+        text_rect = text.get_rect(center=(screen_width // 2, screen_height // 2))
+        screen.blit(text, text_rect)
+        end_game = True
 
     # Draw selected piece border
     if game.selected_pos:
@@ -282,6 +305,10 @@ def update_loop():
     screen.fill(WHITE)
     draw_board(screen_width, screen_height)
     pygame.display.flip()
+
+    if end_game == True:
+        time.sleep(3)
+        pygame.quit()
 
 async def main():
     setup()
