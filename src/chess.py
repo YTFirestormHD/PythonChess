@@ -3,7 +3,6 @@ import platform
 import time
 import pygame
 from fontTools.misc.plistlib import end_string
-
 # Initialize Pygame
 pygame.init()
 
