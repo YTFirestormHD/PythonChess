@@ -16,7 +16,7 @@ BLACK = (0, 0, 0)
 LIGHT_BROWN = (240, 217, 181)
 DARK_BROWN = (181, 136, 99)
 HIGHLIGHT = (100, 255, 100, 128)  # Semi-transparent green for highlights
-SELECTED = (255, 255, 0)  # Yellow for selected piece border
+SELECTED = (255, 255, 0)  # Yellow for selected piece border.
 
 # Set up the display with resizable flag
 screen = pygame.display.set_mode((BOARD_SIZE, BOARD_SIZE), pygame.RESIZABLE)
