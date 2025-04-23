@@ -169,7 +169,7 @@ class Game:
                 self.selected_pos = (row, col)
                 self.valid_moves = piece.get_valid_moves(self.board.board, row, col)
         else:
-            # Try to move the selected piece
+            # Try to move the selected piece.
             if (row, col) in self.valid_moves:
                 self.board.move_piece(self.selected_pos, (row, col))
                 self.switch_turn()
