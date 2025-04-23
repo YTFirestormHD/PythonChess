@@ -9,4 +9,4 @@ The current goal is:
   (-If possible: detect mate/checkmate and prevent illegal moves) 
   
 
-## A code overview  
+## Code overview  
