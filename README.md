@@ -8,3 +8,5 @@ The current goal is:
   -Ending the game  
   (-If possible: detect mate/checkmate and prevent illegal moves) 
   
+
+## A code overview  
