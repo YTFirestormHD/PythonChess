@@ -137,13 +137,13 @@ class Board:
         self.board[to_row][to_col] = self.board[from_row][from_col]
         self.board[from_row][from_col] = None
 
-    def is_king_alive(self, color):
+    def is_win(self, color):
         for row in range(8):
             for col in range(8):
                 piece = self.board[row][col]
                 if piece and piece.color == color and piece.piece_type == "King":
-                    return True
-        return False
+                    return False
+        return True
 
     def is_draw(self):
         amount_left = 0
@@ -196,7 +196,6 @@ class Game:
 
 # Create game
 game = Game()
-end_game = False
 
 def draw_board(screen_width, screen_height):
     # Calculate board size and square size
@@ -228,7 +227,7 @@ def draw_board(screen_width, screen_height):
                 screen.blit(scaled_image, (x_offset + col * square_size, y_offset + row * square_size))
 
 
-    if not game.board.is_king_alive("Black"):
+    if game.board.is_win("Black"):
         # Draw gameover message
         font = pygame.font.SysFont("arial", 48)
         text = font.render(" White wins! ", True, BLACK, WHITE)
@@ -236,7 +235,7 @@ def draw_board(screen_width, screen_height):
         screen.blit(text, text_rect)
         end_game = True
 
-    elif not game.board.is_king_alive("White"):
+    elif game.board.is_win("White"):
         # Draw gameover message
         font = pygame.font.SysFont("arial", 48)
         text = font.render(" Black wins! ", True, WHITE, BLACK)
@@ -305,13 +304,16 @@ def update_loop():
     draw_board(screen_width, screen_height)
     pygame.display.flip()
 
-    if end_game == True:
-        time.sleep(3)
-        pygame.quit()
+
 
 async def main():
     setup()
     while True:
+        win_white = game.board.is_win("Black")
+        win_black = game.board.is_win("White")
+        if win_white == True or win_black == True:
+            time.sleep(3)
+            pygame.quit()
         update_loop()
         await asyncio.sleep(1.0 / FPS)
 
