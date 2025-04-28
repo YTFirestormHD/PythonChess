@@ -305,7 +305,6 @@ def update_loop():
     pygame.display.flip()
 
 
-
 async def main():
     setup()
     while True:
