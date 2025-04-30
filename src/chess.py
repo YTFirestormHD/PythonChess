@@ -1,8 +1,8 @@
 import asyncio
-import platform
 import time
 import pygame
-from fontTools.misc.plistlib import end_string
+import stockfish as sf
+
 # Initialize Pygame
 pygame.init()
 
@@ -137,7 +137,21 @@ class Board:
         self.board[to_row][to_col] = self.board[from_row][from_col]
         self.board[from_row][from_col] = None
 
+        move = f"{chr(65 + from_col)}{8 - from_row}{chr(65 + to_col)}{8 - to_row}"
+        game.engine.make_moves_from_current_position([move])
+
+        # print(game.engine.get_evaluation())
+        update_loop()
+
     def is_win(self, color):
+        evaluation = game.engine.get_evaluation()
+
+        if evaluation['type'] == 'mate':
+            if color == "White" and evaluation['value'] > 0:
+                return True
+            elif color == "Black" and evaluation['value'] < 0:
+                return True
+
         for row in range(8):
             for col in range(8):
                 piece = self.board[row][col]
@@ -162,6 +176,7 @@ class Game:
         self.selected_piece = None
         self.selected_pos = None
         self.valid_moves = []
+        self.engine = sf.Stockfish(path="../assets/stockfish.exe")
 
     def switch_turn(self):
         self.current_turn = "Black" if self.current_turn == "White" else "White"
@@ -169,7 +184,25 @@ class Game:
         self.selected_pos = None
         self.valid_moves = []
 
+        if self.current_turn == "Black":
+            time.sleep(1)
+            # Get the best move from the engine
+            best_move = self.engine.get_best_move().upper()
+            if best_move:
+                from_col = ord(best_move[0]) - 65
+                from_row = 8 - int(best_move[1])
+                to_col = ord(best_move[2]) - 65
+                to_row = 8 - int(best_move[3])
+                self.board.move_piece((from_row, from_col), (to_row, to_col))
+                self.switch_turn()
+
     def handle_click(self, pos, square_size, x_offset, y_offset):
+        if self.current_turn == "Black":
+            return
+
+        if self.board.is_win("White") or self.board.is_win("Black") or self.board.is_draw():
+            return
+
         # Convert pixel position to board coordinates
         col = (pos[0] - x_offset) // square_size
         row = (pos[1] - y_offset) // square_size
@@ -308,11 +341,6 @@ def update_loop():
 async def main():
     setup()
     while True:
-        win_white = game.board.is_win("Black")
-        win_black = game.board.is_win("White")
-        if win_white == True or win_black == True:
-            time.sleep(3)
-            pygame.quit()
         update_loop()
         await asyncio.sleep(1.0 / FPS)
 
