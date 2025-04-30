@@ -5,7 +5,7 @@
 The idea was to create an easy and not too complex chess game for two players.  
 The current goal is 
   - [x] Working Pieces (Moving Capturing)
-  - [ ] Ending the game
+  - [x] Ending the game
   - [ ] Detect check/checkmate and prevent illegal moves  
   - [ ] Integrate Stockfish AI, with different difficulty settings
   
