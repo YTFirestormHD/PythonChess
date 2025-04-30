@@ -1,6 +1,7 @@
 import asyncio
 import platform
 import pygame
+import stockfish
 
 # Initialize Pygame
 pygame.init()
