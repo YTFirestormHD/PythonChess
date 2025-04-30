@@ -140,8 +140,15 @@ class Board:
         move = f"{chr(65 + from_col)}{8 - from_row}{chr(65 + to_col)}{8 - to_row}"
         game.engine.make_moves_from_current_position([move])
 
-        # print(game.engine.get_evaluation())
+        print(game.engine.get_evaluation())
         update_loop()
+
+    def is_check(self, color):
+        for row in range(8):
+            for col in range(8):
+                piece = self.board[row][col]
+
+
 
     def is_win(self, color):
         evaluation = game.engine.get_evaluation()
