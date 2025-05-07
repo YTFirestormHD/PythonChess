@@ -1,4 +1,5 @@
-# PYTHON CHESS
+# PYTHON CHESS EXTREME Pro Edition
+Current version: Pre-Release Beta 1.3.6
 
 ## Made by Franz B., Jonas G. and Moritz G.
 
@@ -9,4 +10,3 @@ The current goal is
   - [ ] Detect check/checkmate and prevent illegal moves  
   - [ ] Integrate Stockfish AI, with different difficulty settings
   
-## Code overview  

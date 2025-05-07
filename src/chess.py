@@ -326,6 +326,7 @@ def setup():
     screen.fill(BACKGROUND)
     draw_board(BOARD_SIZE, BOARD_SIZE)
     pygame.display.flip()
+    pygame.display.set_icon(pygame.image.load("../assets/logo.png"))
 
 def update_loop():
     for event in pygame.event.get():
