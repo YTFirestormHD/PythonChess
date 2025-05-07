@@ -1,6 +1,10 @@
 import asyncio
+import os
 import time
+
+import psutil
 import pygame
+import pygame._sdl2
 import stockfish as sf
 
 # Initialize Pygame
@@ -16,6 +20,7 @@ RED = (255, 0, 0)
 BLUE = (0, 0, 255)
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
+BACKGROUND = (150, 150, 150)
 LIGHT_BROWN = (240, 217, 181)
 DARK_BROWN = (181, 136, 99)
 HIGHLIGHT = (100, 255, 100, 128)  # Semi-transparent green for highlights
@@ -183,7 +188,8 @@ class Game:
         self.selected_piece = None
         self.selected_pos = None
         self.valid_moves = []
-        self.engine = sf.Stockfish(path="../assets/stockfish.exe")
+
+        self.engine = sf.Stockfish(path="../assets/stockfish.exe", parameters={"Threads": os.cpu_count() - 1, "Hash": (psutil.virtual_memory().total / (1024 ** 2)) / 3})
 
     def switch_turn(self):
         self.current_turn = "Black" if self.current_turn == "White" else "White"
@@ -239,7 +245,7 @@ game = Game()
 
 def draw_board(screen_width, screen_height):
     # Calculate board size and square size
-    board_size = min(screen_width, screen_height)
+    board_size = min(screen_width, screen_height - 95)
     square_size = board_size // 8
     x_offset = (screen_width - board_size) // 2
     y_offset = (screen_height - board_size) // 2
@@ -300,7 +306,7 @@ def draw_board(screen_width, screen_height):
     font = pygame.font.SysFont("arial", square_size // 3)
     for i in range(8):
         # Letters (A-H) top and bottom
-        letter = chr(65 + i)  # A=65 in ASCII
+        letter = chr(0x61 + i)  # A=65 in ASCII
         label = font.render(letter, True, BLACK)
         label_rect = label.get_rect()
         label_rect.center = (x_offset + i * square_size + square_size // 2, y_offset - square_size // 4)
@@ -317,7 +323,7 @@ def draw_board(screen_width, screen_height):
         screen.blit(label, label_rect)
 
 def setup():
-    screen.fill(WHITE)
+    screen.fill(BACKGROUND)
     draw_board(BOARD_SIZE, BOARD_SIZE)
     pygame.display.flip()
 
@@ -340,7 +346,7 @@ def update_loop():
 
     # Draw board and pieces
     screen_width, screen_height = screen.get_size()
-    screen.fill(WHITE)
+    screen.fill(BACKGROUND)
     draw_board(screen_width, screen_height)
     pygame.display.flip()
 
