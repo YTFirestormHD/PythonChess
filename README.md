@@ -8,5 +8,5 @@ The current goal is
   - [x] Working Pieces (Moving Capturing)
   - [x] Ending the game
   - [ ] Detect check/checkmate and prevent illegal moves  
-  - [ ] Integrate Stockfish AI, with different difficulty settings
+  - [x] Integrate Stockfish AI, ~~with different difficulty settings~~
   
