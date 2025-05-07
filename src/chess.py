@@ -15,7 +15,7 @@ SQUARE_SIZE = 60
 BOARD_SIZE = 8 * SQUARE_SIZE
 FPS = 60
 
-# Colors add blue and red
+# Colors
 RED = (255, 0, 0)
 BLUE = (0, 0, 255)
 WHITE = (255, 255, 255)
@@ -326,6 +326,7 @@ def setup():
     screen.fill(BACKGROUND)
     draw_board(BOARD_SIZE, BOARD_SIZE)
     pygame.display.flip()
+    pygame.display.set_icon(pygame.image.load("../assets/logo.png"))
 
 def update_loop():
     for event in pygame.event.get():
