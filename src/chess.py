@@ -270,7 +270,7 @@ def draw_board(screen_width, screen_height):
     if game.board.is_win("Black"):
         # Draw gameover message
         font = pygame.font.SysFont("arial", 48)
-        text = font.render(" White wins! ", True, BLACK, WHITE)
+        text = font.render(" Black wins! ", True, BLACK, WHITE)
         text_rect = text.get_rect(center=(screen_width // 2, screen_height // 2))
         screen.blit(text, text_rect)
         end_game = True
@@ -278,7 +278,7 @@ def draw_board(screen_width, screen_height):
     elif game.board.is_win("White"):
         # Draw gameover message
         font = pygame.font.SysFont("arial", 48)
-        text = font.render(" Black wins! ", True, WHITE, BLACK)
+        text = font.render(" White wins! ", True, WHITE, BLACK)
         text_rect = text.get_rect(center=(screen_width // 2, screen_height // 2))
         screen.blit(text, text_rect)
         end_game = True
