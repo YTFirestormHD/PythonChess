@@ -197,7 +197,7 @@ class Game:
         self.selected_pos = None
         self.valid_moves = []
 
-        if self.current_turn == "Black":
+        if True:
             time.sleep(1)
             # Get the best move from the engine
             best_move = self.engine.get_best_move().upper()
