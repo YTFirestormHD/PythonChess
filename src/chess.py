@@ -15,7 +15,7 @@ SQUARE_SIZE = 60
 BOARD_SIZE = 8 * SQUARE_SIZE
 FPS = 60
 
-# Colors add blue and red
+# Colors
 RED = (255, 0, 0)
 BLUE = (0, 0, 255)
 WHITE = (255, 255, 255)
